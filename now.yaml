@@ -1,0 +1,42 @@
+# business_capability:
+#   name: name #mandatory
+#   business_unit: business_unit
+#   department: department
+
+# Order of operations
+
+# Capability -> Offering -> Service -> Application -> application_service (aka environment)
+
+
+
+# Required for ITOM Module
+business_service:
+  name: Threat Detection #mandatory
+  assignment_group: InfoSec Cloud Security
+  business_service_offering:
+    name: Threat Detection - BSO #mandatory
+
+# The collection of things known as XXX
+business_application:
+  name: WAF-Metric-Monitor #mandatory
+  business_owner:
+    name: Jen Trahan
+    email: jen_trahan@discovery.com  #mandatory if include business_owner
+  tech_owner:
+    name: Chris Farris
+    email: chris_farris@discovery.com #mandatory if include tech_owner
+
+# The specific environment that makes up Business Application (Dev, QA, Stage, Prod)
+application_service:
+  name: WAF-Metric-Monitor  #mandatory
+  owner: #possible to auto-populate this using Business Application Tech Owner
+    name: Chris Farris
+    email: chris_farris@discovery.com #mandatory if include owner
+  cloud_service_account: 255671204863
+  microservices: #list out all of the microservices that depend on the repo this file is in
+    - name: WAF-and-Shield-Metric-Monitor-Prod #required
+      cloud_service_account: 255671204863 #possible to populate this from application service if populated there
+      tags: #list out all of the key/value pairs that the components for this microservice are tagged with
+        aws:cloudformation:stack-name: WAF-and-Shield-Metric-Monitor-Prod
+        environment: prod
+
