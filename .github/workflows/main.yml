@@ -1,0 +1,46 @@
+name: build
+
+##
+# Put required ServiceNow Info in Environment Details
+##
+env:
+  commits: '[{"commitId": "${{ github.sha }}" }]'
+  repository: "${{ github.repository }}"
+  run_id: "${{ github.run_number }}"
+  job: ${{ github.job }}
+
+on:
+  push: 
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+##
+# Every job will require a notification to be sent to ServiceNow, change control 
+# is determined on the platform. 
+##
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+     
+      - name: run script
+        run: echo hello
+      
+  package:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps: 
+ 
+    - name: run script
+      run: echo hello
+        
+  change:
+    runs-on: ubuntu-latest
+    needs: package
+    
+    steps:
+      - name: run script
+        run: echo hello
